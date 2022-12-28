@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [notes, setNotes] = useState([])
+  const [value, setValue] = useState('Введите задание')
+  
+  let result = notes.map((note, index) => {
+    return <ol key={index}>
+        {note}
+        <button>V</button>
+        <button onClick={() => delTask(index)}>X</button>
+    </ol> 
+  })
+  
+  function delTask(index) {
+    setNotes([...notes.slice(0, index), ...notes.slice(index + 1)])
+    }
+    
+    
+    function add () {
+      setNotes([...notes, value])
+    }
+    
+  return <div className='checklist'>
+    {result}
+    <input value={value} onChange={event => setValue(event.target.value)}/>
+    <button id='button' onClick={add}>Добавить задание</button>
     </div>
-  );
-}
+  }
 
 export default App;
